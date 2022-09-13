@@ -1,0 +1,47 @@
+public void testWikiLinks() throws InterruptedException {
+
+        driver.get("https://en.wikipedia.org/wiki/Main_Page"); 
+
+        java.util.List<WebElement> links = driver.findElements(By.tagName("a"));
+
+        // Displaying the total number of wikilinks in the Webpage
+        System.out.println("Total links are " + ((java.util.List<WebElement>) links).size());
+//Accepts valid integer from 1-20
+        for (int n = 1; n <= 20; n++) {
+             
+                // Iterating through the array list and getting the URL's
+                String nextHref = ((java.util.List<WebElement>) links).get(n).getAttribute("href");
+                System.out.println("links " + (((java.util.List<WebElement>) links).get(n).getAttribute("href")));
+
+                // Getting the Response Code for URL
+                URL url = new URL(nextHref);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("GET");
+                connection.connect();
+                int code = connection.getResponseCode();
+
+                System.out.println(code + "    ------>");
+
+                Assert.assertEquals(code, 200);
+                // Condition to check whether the URL is valid or Invalid
+                if (code == 200)
+                    System.out.println("Valid Link:" + nextHref);
+
+                else
+                    System.out.println("INVALID Link:" + nextHref);
+            } //terminates after n cyc
+		//Newly found links
+		 for (int i = 0; i <= ((java.util.List<WebElement>) links).size(); i++) {
+        
+         		String nextHref = ((java.util.List<WebElement>) links).get(i).getAttribute("href");
+        		System.out.println("links " + (((java.util.List<WebElement>) links).get(i).getAttribute("href")));
+}
+
+ 
+
+
+		
+            }
+        }
+
+    }
